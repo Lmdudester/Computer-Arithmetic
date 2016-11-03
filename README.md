@@ -26,15 +26,28 @@ Format takes in a bit sequence of 32 bits representative of a float or integer a
     the char *), a char sign (holding ‘+’ or ‘-‘, to represent the sign) and a char * number (holding the number’s 
     representation in binary as an ASCII string).
     
+        Next it matches the string sizes of both numbers. This makes it so if a number is negative or being 
+    subtracted, we can twos compliment it and just add it to the other number, then twos compliment the result 
+    and change the sign if needed. In matching the size it makes both numbers have a string length equal to the
+    higher of the two, adding extra zeros onto the end of the smaller. Then it adds 4 zeros to both numbers to 
+    account for overflow. (Only one zero is needed for potential overflow but 4 are needed to ensure the 
+    conversion methods back to ASCII collect the extra overflow data)
+    
+        Then the program decides what operation to do based on the arguments given and passes the two bNums to 
+    either add or subtract.  These functions do not actually do any real binary addition, they just prep the bNums 
+    and send them to another function to handle them. Subtract just changes the signs and/or two compliments the 
+    second bNum depending on the situation and sends it to add. Add changes none, one or both before sending them 
+    to posAdd which actually calculates adding the second bNum to the first. From there add checks to see if it’s 
+    negative (the highest digit is one) and twos compliments it and changes its sign if necessary.
+    
+        Now the first bNum contains the sum of the two in binary. So the program passes it to bNumToASCII which 
+    returns a dynamically allocated string representation of the bNum in the output base given by the last 
+    argument. From there it is determined if the number is negative and it is printed out with a ‘-‘ before the 
+    number if it is or nothing if it is positive. (0 will always be positive)
+
+    
 ### THINGS TO NOTE ABOUT bNum:
  - The binary string (number) is ordered with the least significant digit at the beginning  to make arithmetic easier
  - The binary string (number) is kept in a string with size divisible by 32, meaning that if a signed input number needs 33 bits to be represented, its number variable would have 64 non-null byte characters. This allows for quick size matching so twos compliment can be used in arithmetic.
  - The null byte is included in the number of chars used as tracked by numDigits
  - The struct itself is dynamically allocated along with the char * inside
- 
-           Next it matches the string sizes of both numbers. This makes it so if a number is negative or being 
-       subtracted, we can twos compliment it and just add it to the other number, then twos compliment the result 
-       and change the sign if needed. In matching the size it makes both numbers have a string length equal to the
-       higher of the two, adding extra zeros onto the end of the smaller. Then it adds 4 zeros to both numbers to 
-       account for overflow. (Only one zero is needed for potential overflow but 4 are needed to ensure the 
-       conversion methods back to ASCII collect the extra overflow data) 
