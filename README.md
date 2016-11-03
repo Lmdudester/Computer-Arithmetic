@@ -32,9 +32,9 @@ Format takes in a bit sequence of 32 bits representative of a float or integer a
  - The null byte is included in the number of chars used as tracked by numDigits
  - The struct itself is dynamically allocated along with the char * inside
  
-        Next it matches the string sizes of both numbers. This makes it so if a number is negative or being 
-    subtracted, we can twos compliment it and just add it to the other number, then twos compliment the result 
-    and change the sign if needed. In matching the size it makes both numbers have a string length equal to the
-    higher of the two, adding extra zeros onto the end of the smaller. Then it adds 4 zeros to both numbers to 
-    account for overflow. (Only one zero is needed for potential overflow but 4 are needed to ensure the 
-    conversion methods back to ASCII collect the extra overflow data) 
+                Next it matches the string sizes of both numbers. This makes it so if a number is negative or being 
+        subtracted, we can twos compliment it and just add it to the other number, then twos compliment the result 
+        and change the sign if needed. In matching the size it makes both numbers have a string length equal to the
+        higher of the two, adding extra zeros onto the end of the smaller. Then it adds 4 zeros to both numbers to 
+        account for overflow. (Only one zero is needed for potential overflow but 4 are needed to ensure the 
+        conversion methods back to ASCII collect the extra overflow data) 
