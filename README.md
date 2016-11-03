@@ -51,3 +51,14 @@ Format takes in a bit sequence of 32 bits representative of a float or integer a
  - The binary string (number) is kept in a string with size divisible by 32, meaning that if a signed input number needs 33 bits to be represented, its number variable would have 64 non-null byte characters. This allows for quick size matching so twos compliment can be used in arithmetic.
  - The null byte is included in the number of chars used as tracked by numDigits
  - The struct itself is dynamically allocated along with the char * inside
+ 
+### IMPORTANT:
+#### Following the spec, this is how this program handles negative input:
+ - It is assumed that the number after the base signifier is positive
+ - If a number is negative it is denoted by a ‘–‘ before the base signifier
+
+### Challenges:
+
+        The only real issue I faced while writing this code was deciding how I would handle each function. I 
+    decided very early on what methods I would need and what they would need to do, but sitting down and deciding 
+    exactly how they would do it took more time than actually coding them.
