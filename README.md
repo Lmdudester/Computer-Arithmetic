@@ -8,7 +8,7 @@
 
 Computer Arithmetic is a C Library with two libraries. 
 
-**Calc** takes in 4 arguments, the first being the operation (+ or -), the next two being numbers (of bases hexadecimal, decimal octal or binary) in the format for a string and the last being a single character string (representing the base of the output). It adds the two given numbers together and returns the resulting number in the given output base.
+**Calc** takes in 4 arguments, the first being the operation (+ or -), the next two being numbers (of bases hexadecimal, decimal, octal or binary) in the format for a string and the last being a single character string (representing the base of the output). It adds the two given numbers together and returns the resulting number in the given output base.
 
 **Format** takes in a bit sequence of 32 bits representative of a float or integer and a string that gives the type the first string should be interpreted as. It interprets the number as such and prints out the finalized number in its repective format.
 
