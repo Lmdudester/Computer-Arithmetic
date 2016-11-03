@@ -8,9 +8,9 @@
 
 Computer Arithmetic is a C Library with two libraries. 
 
-Calc takes in 4 arguments, the first being the operation (+ or -), the next two being numbers (of bases hexadecimal, decimal octal or binary) in the format for a string and the last being a single character string (representing the base of the output). It adds the two given numbers together and returns the resulting number in the given output base.
+**Calc** takes in 4 arguments, the first being the operation (+ or -), the next two being numbers (of bases hexadecimal, decimal octal or binary) in the format for a string and the last being a single character string (representing the base of the output). It adds the two given numbers together and returns the resulting number in the given output base.
 
-Format takes in a bit sequence of 32 bits representative of a float or integer and a string that gives the type the first string should be interpreted as. It interprets the number as such and prints out the finalized number in its repective format.
+**Format** takes in a bit sequence of 32 bits representative of a float or integer and a string that gives the type the first string should be interpreted as. It interprets the number as such and prints out the finalized number in its repective format.
 
 # Calc.c ReadMe
 
@@ -46,19 +46,48 @@ Format takes in a bit sequence of 32 bits representative of a float or integer a
     number if it is or nothing if it is positive. (0 will always be positive)
 
     
-### THINGS TO NOTE ABOUT bNum:
+## THINGS TO NOTE ABOUT bNum:
  - The binary string (number) is ordered with the least significant digit at the beginning  to make arithmetic easier
  - The binary string (number) is kept in a string with size divisible by 32, meaning that if a signed input number needs 33 bits to be represented, its number variable would have 64 non-null byte characters. This allows for quick size matching so twos compliment can be used in arithmetic.
  - The null byte is included in the number of chars used as tracked by numDigits
  - The struct itself is dynamically allocated along with the char * inside
  
-### IMPORTANT:
-#### Following the spec, this is how this program handles negative input:
+## IMPORTANT:
+### Following the spec, this is how this program handles negative input:
  - It is assumed that the number after the base signifier is positive
  - If a number is negative it is denoted by a ‘–‘ before the base signifier
 
-### Challenges:
+## Challenges:
 
         The only real issue I faced while writing this code was deciding how I would handle each function. I 
     decided very early on what methods I would need and what they would need to do, but sitting down and deciding 
     exactly how they would do it took more time than actually coding them.
+    
+## Analysis:
+
+        The program must run at some linear time since the program doesn’t use any algorithms that do anything 
+    more than read though the number character by character or digit by digit. Since the program stores data in 
+    multiples of 32 contiguous chars and 36 with 4 digits for overflow it is easier and faster to convert data 
+    back to ASCII for octal and hex without losing data, however it takes up more space than will be needed in 
+    most cases.
+    
+# Format.c ReadMe
+
+## Description: 
+
+        This program takes in a bit sequence of 32 bits representative of a float or integer and a string that 
+    gives the type the first string should be interpreted as. First it takes the string and bitshifts the data 
+    into a number union. The union consists of an integer and a float of equal size, namely 32 bits. Once the 
+    program has bitshifted the bit pattern into the integer part of the number union it decides if it is an 
+    integer or a float bit pattern and passes the proper section of it to its respective function.
+    
+        If it is an integer, num.i is passed to intToDecASCII which converts the number into a backwards string
+    by modding it and diving by 10, and then it reverses it and places it into the buffer array passed to the 
+    function.
+    
+        If it is a float it is handled by floatToASCII which is a function written by Professor Russell which 
+    turns a floating point number into a string in the format of (-)x.xxxxxxe(-)x.
+
+## Important Details & Edits to *floatToASCII*:
+ - The original function return values of +inf, -inf, +NaN and –NaN have been altered to pinf, ninf, NaN and NaN respectively
+ - When a single digit exponent was found the old function padded it on the left with one zero, I removed this padded zero.
